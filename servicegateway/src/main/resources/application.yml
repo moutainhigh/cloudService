@@ -1,0 +1,54 @@
+server:
+  port: 5555
+spring:
+  cloud:
+    gateway:
+      default-filters:
+          - name: Hystrix
+            args:
+              name: fallbackcmd
+              fallbackUri: forward:/fallback
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: api_route
+          uri: lb://serviceapi
+          predicates:
+            - Path=/api-search/**
+          filters:
+#            - StripPrefix=1
+            # {} 是用来取值的
+            - RewritePath=/api-search/(?<remaining>.*), /$\{remaining}
+#            - name: Hystrix
+#              args :
+#                name: fallbackcmd
+#                fallbackUri: forward:/fallback
+
+        - id: mt_route
+          uri: lb://mtservice
+          predicates:
+            - Path=/api-mt/**
+            # filters:
+            # - AddResponseHeader=heyijie,666
+        - id: search_route
+          uri: lb://searchservice
+          predicates:
+            - Path=/search/**
+            # filters:
+            # - AddResponseHeader=heyijie,666
+eureka:
+  client:
+    service-url:
+      defaultZone: http://10.33.6.38:8761/eureka/
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000

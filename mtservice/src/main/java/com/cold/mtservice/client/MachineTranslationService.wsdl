@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" name="MachineTranslationService" targetNamespace="http://tempuri.org/">
+  <wsdl:types>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+			<xs:import namespace="http://schemas.datacontract.org/2004/07/TranslationWcfService"/>
+			<xs:element name="Translate">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/TranslationWcfService" minOccurs="0" name="translationParameter" nillable="false" type="q1:MachineTranslationParameter"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TranslateResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/TranslationWcfService" minOccurs="0" name="TranslateResult" nillable="false" type="q2:MachineTranslationResult"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/">
+			<xs:element name="anyType" nillable="false" type="xs:anyType"/>
+			<xs:element name="anyURI" nillable="false" type="xs:anyURI"/>
+			<xs:element name="base64Binary" nillable="false" type="xs:base64Binary"/>
+			<xs:element name="boolean" nillable="false" type="xs:boolean"/>
+			<xs:element name="byte" nillable="false" type="xs:byte"/>
+			<xs:element name="dateTime" nillable="false" type="xs:dateTime"/>
+			<xs:element name="decimal" nillable="false" type="xs:decimal"/>
+			<xs:element name="double" nillable="false" type="xs:double"/>
+			<xs:element name="float" nillable="false" type="xs:float"/>
+			<xs:element name="int" nillable="false" type="xs:int"/>
+			<xs:element name="long" nillable="false" type="xs:long"/>
+			<xs:element name="QName" nillable="false" type="xs:QName"/>
+			<xs:element name="short" nillable="false" type="xs:short"/>
+			<xs:element name="string" nillable="false" type="xs:string"/>
+			<xs:element name="unsignedByte" nillable="false" type="xs:unsignedByte"/>
+			<xs:element name="unsignedInt" nillable="false" type="xs:unsignedInt"/>
+			<xs:element name="unsignedLong" nillable="false" type="xs:unsignedLong"/>
+			<xs:element name="unsignedShort" nillable="false" type="xs:unsignedShort"/>
+			<xs:element name="char" nillable="false" type="tns:char"/>
+			<xs:simpleType name="char">
+				<xs:restriction base="xs:int"/>
+			</xs:simpleType>
+			<xs:element name="duration" nillable="false" type="tns:duration"/>
+			<xs:simpleType name="duration">
+				<xs:restriction base="xs:duration">
+					<xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+					<xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+					<xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="guid" nillable="false" type="tns:guid"/>
+			<xs:simpleType name="guid">
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:attribute name="FactoryType" type="xs:QName"/>
+			<xs:attribute name="Id" type="xs:ID"/>
+			<xs:attribute name="Ref" type="xs:IDREF"/>
+		</xs:schema>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:tns="http://schemas.datacontract.org/2004/07/TranslationWcfService" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/TranslationWcfService">
+			<xs:complexType name="MachineTranslationParameter">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="LanguageOptions" nillable="false" type="tns:LanguageOptions"/>
+					<xs:element minOccurs="0" name="OriginalText" nillable="false" type="xs:string"/>
+					<xs:element minOccurs="0" name="TranslationClass" type="tns:TranslationClass"/>
+					<xs:element minOccurs="0" name="UserId" nillable="false" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="MachineTranslationParameter" nillable="false" type="tns:MachineTranslationParameter"/>
+			<xs:complexType name="LanguageOptions">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="Source" type="tns:LanguageOption"/>
+					<xs:element minOccurs="0" name="Target" type="tns:LanguageOption"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="LanguageOptions" nillable="false" type="tns:LanguageOptions"/>
+			<xs:simpleType name="LanguageOption">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="en"/>
+					<xs:enumeration value="zh"/>
+					<xs:enumeration value="jp"/>
+					<xs:enumeration value="ko"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="LanguageOption" nillable="false" type="tns:LanguageOption"/>
+			<xs:simpleType name="TranslationClass">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="A"/>
+					<xs:enumeration value="B"/>
+					<xs:enumeration value="C"/>
+					<xs:enumeration value="D"/>
+					<xs:enumeration value="E"/>
+					<xs:enumeration value="F"/>
+					<xs:enumeration value="G"/>
+					<xs:enumeration value="H"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="TranslationClass" nillable="false" type="tns:TranslationClass"/>
+			<xs:complexType name="MachineTranslationResult">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="OrderedResult" nillable="false" type="xs:string"/>
+					<xs:element minOccurs="0" name="OriginalText" nillable="false" type="xs:string"/>
+					<xs:element minOccurs="0" name="UnorderedResult" nillable="false" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="MachineTranslationResult" nillable="false" type="tns:MachineTranslationResult"/>
+		</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="IMachineTranslationService_Translate_OutputMessage">
+    <wsdl:part element="tns:TranslateResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IMachineTranslationService_Translate_InputMessage">
+    <wsdl:part element="tns:Translate" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IMachineTranslationService">
+    <wsdl:operation name="Translate">
+      <wsdl:input message="tns:IMachineTranslationService_Translate_InputMessage" wsaw:Action="http://tempuri.org/IMachineTranslationService/Translate">
+    </wsdl:input>
+      <wsdl:output message="tns:IMachineTranslationService_Translate_OutputMessage" wsaw:Action="http://tempuri.org/IMachineTranslationService/TranslateResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IMachineTranslationService" type="tns:IMachineTranslationService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Translate">
+      <soap:operation soapAction="http://tempuri.org/IMachineTranslationService/Translate" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MachineTranslationService">
+    <wsdl:port binding="tns:BasicHttpBinding_IMachineTranslationService" name="BasicHttpBinding_IMachineTranslationService">
+      <soap:address location="http://114.251.8.179:8082/CASMTService/services/MachineTranslationService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
