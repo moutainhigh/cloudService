@@ -21,8 +21,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.*;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class SearchserviceApplicationTests {
 
     @Autowired
@@ -64,7 +64,7 @@ public class SearchserviceApplicationTests {
         PatentEntity patentEntity = null;
         List<PatentZhEnIndex> list = new ArrayList<>();
         int startLine = 3144408;
-        startLine += 225593;
+        startLine+=140293 ;
         while ((line = reader.readLine()) != null) {
 //            if(i==startLine+50){
 //                break;
@@ -104,14 +104,16 @@ public class SearchserviceApplicationTests {
                 e.printStackTrace();
             }
 
-            if(i%10000==0){
+            if(i%1000==0){
                 patentService.saveAllPatentZhEn(list);
-                System.out.println(i+":"+patentEntity);
+                System.out.println(i+":"+pno);
+                list.clear();
             }
             i++;
         }
         if(list.size()>0){
             patentService.saveAllPatentZhEn(list);
+            list.clear();
         }
         fis.close();
         reader.close();
@@ -123,50 +125,50 @@ public class SearchserviceApplicationTests {
         System.out.println("索引创建完毕,共"+i+"条,用时:"+(end-start)/1000l+"秒");
     }
     //@Test
-    public void testSavePatInfo(){
-        long start = System.currentTimeMillis();
-        String enter = "\r\n";
-        int bufSize = 1000000;//一次读取的字节长度
-        String pnoFile = "D:\\语料\\中英专利提取语料\\new-pNo-11434571.txt.utf8";
-        File fout = new File("E:\\new-patinfo.txt");//写出的文件
-        File file = new File(pnoFile);
-        try {
-            FileChannel fcout = new RandomAccessFile(fout, "rws").getChannel();
-            ByteBuffer wBuffer = ByteBuffer.allocateDirect(bufSize);
-            BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file));
-            BufferedReader pnoReader = new BufferedReader(new InputStreamReader(fis, "UTF-8"), 10 * 1024 * 1024);
-            String pno = "";
-            int i = 0;
-            String prePno = "";
-            PatentEntity patentEntity = null;
-            while ((pno = pnoReader.readLine()) != null) {
-                if(!pno.equalsIgnoreCase(prePno)){
-                    patentEntity = patentService.findPatentByNo(pno);
-                    prePno = pno;
-                }
-
-                String json = JsonUtils.objectToJson(patentEntity);
-                json = json==null?enter:json+enter;
-                FileUtils.writeFileByLine(fcout,wBuffer,json);
-                //if(i==50)break;
-             if(i%10000==0){
-                System.out.println(i+":"+patentEntity);
-            }
-                i++;
-            }
-            if (fcout.isOpen()) {
-                fcout.close();
-            }
-            long end = System.currentTimeMillis();
-            System.out.println("数据写入完毕,共"+i+"条,用时:"+(end-start)/1000l+"秒");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void testSavePatInfo(){
+//        long start = System.currentTimeMillis();
+//        String enter = "\r\n";
+//        int bufSize = 1000000;//一次读取的字节长度
+//        String pnoFile = "D:\\语料\\中英专利提取语料\\new-pNo-11434571.txt.utf8";
+//        File fout = new File("E:\\new-patinfo.txt");//写出的文件
+//        File file = new File(pnoFile);
+//        try {
+//            FileChannel fcout = new RandomAccessFile(fout, "rws").getChannel();
+//            ByteBuffer wBuffer = ByteBuffer.allocateDirect(bufSize);
+//            BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file));
+//            BufferedReader pnoReader = new BufferedReader(new InputStreamReader(fis, "UTF-8"), 10 * 1024 * 1024);
+//            String pno = "";
+//            int i = 0;
+//            String prePno = "";
+//            PatentEntity patentEntity = null;
+//            while ((pno = pnoReader.readLine()) != null) {
+//                if(!pno.equalsIgnoreCase(prePno)){
+//                    patentEntity = patentService.findPatentByNo(pno);
+//                    prePno = pno;
+//                }
+//
+//                String json = JsonUtils.objectToJson(patentEntity);
+//                json = json==null?enter:json+enter;
+//                FileUtils.writeFileByLine(fcout,wBuffer,json);
+//                //if(i==50)break;
+//             if(i%10000==0){
+//                System.out.println(i+":"+patentEntity);
+//            }
+//                i++;
+//            }
+//            if (fcout.isOpen()) {
+//                fcout.close();
+//            }
+//            long end = System.currentTimeMillis();
+//            System.out.println("数据写入完毕,共"+i+"条,用时:"+(end-start)/1000l+"秒");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //@Test
 //    public void createPatinfoIndex(){
@@ -257,13 +259,15 @@ public class SearchserviceApplicationTests {
 //        });
     }
 
-    //@Test
+    @Test
     public void testSearch2(){
         String pno = "201680021746.8";
-        String fileno = "CN2018108367551A";
+        String fileno = "CN2018107529719A";
+        PatentEntity entity = patentService.findOnePatentByNo(fileno);
+        System.out.println("2222"+entity);
         Map<String,String> queryNames = new HashMap();
-        //queryNames.put("applicationNumber",pno);
-        queryNames.put("fileNo",fileno);
+        queryNames.put("applicationNumber","201780022461.0");
+        //queryNames.put("fileNo",fileno);
         Page<PatentEntity> page = patentService.pageQuery(0,10,queryNames);
         page.forEach(patentEntity -> {
             System.out.println(patentEntity);

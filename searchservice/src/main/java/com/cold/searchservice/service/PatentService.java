@@ -37,11 +37,11 @@ public interface PatentService {
 
     Page<PatentEntity> pageQuery(Integer pageNo, Integer pageSize,Map<String,String> queryParams);
 
-    PatentEntity findPatentByNo(String patentNo);
+//    PatentEntity findPatentByNo(String patentNo);
 
     PatentEntity findOnePatentByNo(String patentNo);
 
-    List<PatentEntity> findAll();
+//    List<PatentEntity> findAll();
 
     Page<TmxPatentEntity> pageQuery4tmx(Integer pageNo, Integer pageSize, Map<String,String> queryParams);
 

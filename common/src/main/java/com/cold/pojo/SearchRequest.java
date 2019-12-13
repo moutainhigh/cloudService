@@ -21,6 +21,7 @@ public class SearchRequest implements Serializable {
     private String srcLan;
     private String tgtLan;
     private String catalog;
+    private String applicants;//申请人/专利权人
     @Max(value = 500, message = "count不能大于500")
     @Min(value = 1, message = "count不能小于1")
     private Integer count;

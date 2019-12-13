@@ -27,7 +27,7 @@ public class MTTranslate {
             translationParameter.setOriginalText(Base64.getEncoder().encodeToString(mtRequest.getOriginalText().getBytes("UTF-8")));
             MachineTranslationResult machineTranslationResult =  machineTranslationService.translate(translationParameter);
             trans = machineTranslationResult.getOrderedResult();
-            if(StringUtils.isNotBlank(trans))trans = new String(Base64.getDecoder().decode(trans.getBytes()),"UTF-8");
+            //if(StringUtils.isNotBlank(trans))trans = new String(Base64.getDecoder().decode(trans.getBytes()),"UTF-8");
         } catch (UnsupportedEncodingException e) {
 
         }

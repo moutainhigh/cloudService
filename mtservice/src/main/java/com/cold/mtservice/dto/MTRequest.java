@@ -1,16 +1,13 @@
 package com.cold.mtservice.dto;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 /**
  * @Auther: ohj
  * @Date: 2019/5/5 09:07
  * @Description:
  */
-@Getter
-@Setter
+@Data
 public class MTRequest {
     private Long userId;
     private String from;

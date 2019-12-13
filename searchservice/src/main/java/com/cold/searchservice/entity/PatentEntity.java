@@ -45,37 +45,37 @@ public class PatentEntity implements Serializable {
     private String language;
     @Field(type = FieldType.Text)
     private String fileNo;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String ipphPub;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String publicationNumber;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String pubDate;
-    @Field(type = FieldType.Keyword)
+    @Field(type = FieldType.Text)
     private String ipphApp;
     @Field(type = FieldType.Text)
     private String applicationNumber;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String appDate;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String priority;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String mainClassification;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String classificationsIPCR;
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
+    //@Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
     private String cnTitle;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String applicants;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String inventors;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String agents;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String countryOriginalApp;
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private String entryNationalStageDate;
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
+    //@Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
     private String cnAbstract;
 //    @Field(type = FieldType.Keyword,ignoreFields = {})
 //    private String hilightText;

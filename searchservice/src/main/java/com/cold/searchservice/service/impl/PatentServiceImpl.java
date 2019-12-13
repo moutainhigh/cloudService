@@ -1,6 +1,5 @@
 package com.cold.searchservice.service.impl;
 
-import com.cold.searchservice.dao.PatentMapper;
 import com.cold.searchservice.dao.PatentRepository;
 import com.cold.searchservice.dao.PatentZhEnRepository;
 import com.cold.searchservice.dao.TmxCorpusPatentRepository;
@@ -42,8 +41,8 @@ public class PatentServiceImpl implements PatentService {
     private PatentZhEnRepository patentZhEnRepository;
     @Autowired
     private TmxCorpusPatentRepository tmxCorpusPatentRepository;
-    @Autowired
-    private PatentMapper patentMapper;
+//    @Autowired
+//    private PatentMapper patentMapper;
     @Resource
     private ESResultMapper esResultMapper;
     @Autowired
@@ -118,10 +117,10 @@ public class PatentServiceImpl implements PatentService {
         return patentRepository.search(nativeSearchQueryBuilder.build());
     }
 
-    @Override
-    public PatentEntity findPatentByNo(String patentNo) {
-        return patentMapper.findPatentByNo(patentNo);
-    }
+//    @Override
+//    public PatentEntity findPatentByNo(String patentNo) {
+//        return patentMapper.findPatentByNo(patentNo);
+//    }
 
     @Override
     public PatentEntity findOnePatentByNo(String patentNo) {
@@ -138,10 +137,10 @@ public class PatentServiceImpl implements PatentService {
         return null;
     }
 
-    @Override
-    public List<PatentEntity> findAll() {
-        return patentMapper.findAll();
-    }
+//    @Override
+//    public List<PatentEntity> findAll() {
+//        return patentMapper.findAll();
+//    }
 
     @Override
     public Page<TmxPatentEntity> pageQuery4tmx(Integer pageNo, Integer pageSize,Map<String,String> queryParams) {

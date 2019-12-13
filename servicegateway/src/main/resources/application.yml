@@ -30,18 +30,28 @@ spring:
           uri: lb://mtservice
           predicates:
             - Path=/api-mt/**
-            # filters:
+          filters:
+#            - StripPrefix=1
+            - RewritePath=/api-mt/(?<remaining>.*), /$\{remaining}
             # - AddResponseHeader=heyijie,666
-        - id: search_route
-          uri: lb://searchservice
+#        - id: search_route
+#          uri: lb://searchservice
+#          predicates:
+#            - Path=/search/**
+#            # filters:
+#            # - AddResponseHeader=heyijie,666
+        - id: auth_route
+          uri: lb://auth
           predicates:
-            - Path=/search/**
-            # filters:
+            - Path=/api-auth/**
+          filters:
+            #            - StripPrefix=1
+            - RewritePath=/api-auth/(?<remaining>.*), /$\{remaining}
             # - AddResponseHeader=heyijie,666
 eureka:
   client:
     service-url:
-      defaultZone: http://10.33.6.38:8761/eureka/
+      defaultZone: http://10.33.6.80:8761/eureka/
 logging:
   level:
     org.springframework.cloud.gateway: debug
