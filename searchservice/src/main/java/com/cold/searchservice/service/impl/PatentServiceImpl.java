@@ -8,7 +8,9 @@ import com.cold.searchservice.entity.PatentZhEnIndex;
 import com.cold.searchservice.entity.TmxPatentEntity;
 import com.cold.searchservice.mapper.ESResultMapper;
 import com.cold.searchservice.service.PatentService;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
@@ -172,10 +174,19 @@ public class PatentServiceImpl implements PatentService {
     public List<PatentZhEnIndex> pageQueryZhen(Integer pageNo, Integer pageSize, Map<String, String> queryParams) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder().withPageable(pageable);
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
         queryParams.forEach((t,v)->{
-            nativeSearchQueryBuilder.withQuery(QueryBuilders.matchPhraseQuery(t, v).slop(0));//完全匹配
-            nativeSearchQueryBuilder.withHighlightFields(new HighlightBuilder.Field(t));
+            if("applicants".equals(t)){
+                nativeSearchQueryBuilder.withQuery(queryBuilder.must(QueryBuilders.fuzzyQuery(t, v)));
+                nativeSearchQueryBuilder.withHighlightFields(new HighlightBuilder.Field(t).preTags("<em>").postTags("</em>"));
+            }else{
+                nativeSearchQueryBuilder.withQuery(queryBuilder.must(QueryBuilders.matchPhraseQuery(t, v).slop(0)));//完全匹配
+            }
+
+            //nativeSearchQueryBuilder.withHighlightFields(new HighlightBuilder.Field(t));
         });
-        return patentZhEnRepository.search(nativeSearchQueryBuilder.build()).getContent();
+        Page<PatentZhEnIndex> searchPageResults = elasticsearchTemplate.queryForPage(nativeSearchQueryBuilder.build(),PatentZhEnIndex.class,esResultMapper);
+        //return patentZhEnRepository.search(nativeSearchQueryBuilder.build()).getContent();
+        return searchPageResults.getContent();
     }
 }

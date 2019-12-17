@@ -261,16 +261,20 @@ public class SearchserviceApplicationTests {
 
     @Test
     public void testSearch2(){
-        String pno = "201680021746.8";
-        String fileno = "CN2018107529719A";
-        PatentEntity entity = patentService.findOnePatentByNo(fileno);
-        System.out.println("2222"+entity);
+//        String pno = "201680021746.8";
+//        String fileno = "CN2018107529719A";
+//        PatentEntity entity = patentService.findOnePatentByNo(fileno);
+//        System.out.println("2222"+entity);
         Map<String,String> queryNames = new HashMap();
-        queryNames.put("applicationNumber","201780022461.0");
-        //queryNames.put("fileNo",fileno);
-        Page<PatentEntity> page = patentService.pageQuery(0,10,queryNames);
-        page.forEach(patentEntity -> {
-            System.out.println(patentEntity);
+        //queryNames.put("applicationNumber","201780022461.0");
+        queryNames.put("applicants","耐克");
+//        Page<PatentEntity> page = patentService.pageQuery(0,10,queryNames);
+//        page.forEach(patentEntity -> {
+//            System.out.println(patentEntity);
+//        });
+        List<PatentZhEnIndex> list = patentService.pageQueryZhen(0,10,queryNames);
+        list.forEach(patentZhEnIndex -> {
+            System.out.println(patentZhEnIndex.getApplicants());
         });
 //        Iterator<TmxPatentEntity> tmxPatentEntities = page.iterator();
 //        tmxPatentEntities.forEachRemaining(tmxPatentEntity -> {

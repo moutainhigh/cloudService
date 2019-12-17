@@ -89,6 +89,9 @@ public class SearchController {
         if(StringUtils.isNotBlank(searchRequest.getCatalog())){
             map.put("mainClassification",searchRequest.getCatalog());
         }
+        if(StringUtils.isNotBlank(searchRequest.getApplicants())){
+            map.put("applicants",searchRequest.getCatalog());
+        }
         int count = searchRequest.getCount();
         if(count>500)count = 500;
         List<PatentZhEnIndex> list = patentService.pageQueryZhen(0,count,map);
