@@ -1,4 +1,4 @@
-package com.cold.searchservice.common.api;
+package com.cold.response;
 
 /**
  * 封装API的错误码

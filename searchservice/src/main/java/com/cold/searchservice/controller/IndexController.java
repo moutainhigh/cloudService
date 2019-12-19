@@ -1,7 +1,7 @@
 package com.cold.searchservice.controller;
 
-import com.cold.searchservice.common.api.CommonResult;
-import com.cold.searchservice.dto.IndexDto;
+import com.cold.pojo.IndexDto;
+import com.cold.response.CommonResult;
 import com.cold.searchservice.entity.PatentEntity;
 import com.cold.searchservice.entity.PatentZhEnIndex;
 import com.cold.searchservice.service.PatentService;
@@ -85,7 +85,7 @@ public class IndexController {
                 patentInfo.setZh2enaligned(indexDto.getS2talign());
                 patentInfo.setEn2zhaligned(indexDto.getT2salign());
                 list.add(patentInfo);
-                if(i%100==0){
+                if(i%500==0){
                     patentService.saveAllPatentZhEn(list);
                     log.info(i+":"+pno);
                     list.clear();

@@ -1,8 +1,6 @@
 package com.cold.searchservice.exception;
 
-import com.cold.searchservice.common.api.CommonResult;
-import com.cold.searchservice.common.api.IErrorCode;
-import com.cold.searchservice.common.api.ResultCode;
+import com.cold.response.CommonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;

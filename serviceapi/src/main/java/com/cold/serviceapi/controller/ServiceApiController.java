@@ -1,7 +1,9 @@
 package com.cold.serviceapi.controller;
 
+import com.cold.pojo.IndexDto;
 import com.cold.pojo.PatentVo;
 import com.cold.pojo.SearchRequest;
+import com.cold.response.CommonResult;
 import com.cold.serviceapi.api.SearchService;
 import com.cold.serviceapi.service.SearchResultService;
 import com.google.common.collect.Lists;
@@ -49,7 +51,7 @@ public class ServiceApiController {
     }
 
     @RequestMapping(value="/search")
-    public Map<String,List<PatentVo>> search(@Valid @RequestBody SearchRequest searchRequest){
+    public CommonResult search(@Valid @RequestBody SearchRequest searchRequest){
         String kw = searchRequest.getKw();
         String terms = kw;
         boolean removeTransBlank = false;
@@ -77,6 +79,11 @@ public class ServiceApiController {
 
 //        resMap.entrySet().stream().sorted((Comparator<? super Map.Entry<String, List<PatentVo>>>) Map.Entry.comparingByValue(comparator).reversed())
 //                .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
-        return sortedMap;
+        return CommonResult.success(sortedMap);
+    }
+
+    @RequestMapping(value="/createIndex")
+    public CommonResult createIndex(@RequestBody List<IndexDto> indexDtos){
+        return searchService.createIndex(indexDtos);
     }
 }

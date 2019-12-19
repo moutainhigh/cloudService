@@ -1,4 +1,4 @@
-package com.cold.searchservice.dto;
+package com.cold.pojo;
 
 import lombok.Data;
 

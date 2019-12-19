@@ -1,7 +1,9 @@
 package com.cold.serviceapi.api;
 
+import com.cold.pojo.IndexDto;
 import com.cold.pojo.PatentVo;
 import com.cold.pojo.SearchRequest;
+import com.cold.response.CommonResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,5 +44,9 @@ public interface SearchService {
         @ResponseBody
         @RequestMapping(value="/api/getIkAnalyzeSearchTerms")
         List<String> getSearchTerms(@RequestParam String searchContent);
+
+        @ResponseBody
+        @RequestMapping(value="/index/createIndex")
+        CommonResult createIndex(@RequestBody List<IndexDto> indexDtos);
 
 }
