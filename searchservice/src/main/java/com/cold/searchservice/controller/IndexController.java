@@ -1,10 +1,12 @@
 package com.cold.searchservice.controller;
 
 import com.cold.pojo.IndexDto;
+import com.cold.pojo.PatentVo;
 import com.cold.response.CommonResult;
 import com.cold.searchservice.entity.PatentEntity;
 import com.cold.searchservice.entity.PatentZhEnIndex;
 import com.cold.searchservice.service.PatentService;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeAction;
@@ -23,6 +25,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * @Auther: ohj
@@ -38,8 +41,8 @@ public class IndexController {
     @Autowired
     private PatentService patentService;
 
-//    @RequestMapping("createIndex")
-//    public String createIndex(){
+    @RequestMapping("exportSql2Index")
+    public CommonResult exportSql2Index(@RequestBody List<PatentVo> patentVos){
 //        PatentEntity patentEntity = new PatentEntity();
 //        //patentEntity.setPatentNo("CN67450987");
 //        patentEntity.setSource("8.权利要求1的组合物，其中所述碱性钙源以悬浮液或干粉形式使用，并且所述乳酸和柠檬酸的混合物以溶液形式使用。");
@@ -51,7 +54,21 @@ public class IndexController {
 //        patentService.save(patentEntity);
 //        log.info("索引1创建成功");
 //        return "success";
-//    }
+        List<PatentEntity> patentEntities = patentVos.stream().map(patentVo -> {
+            PatentEntity patentEntity = new PatentEntity();
+            try {
+                BeanUtils.copyProperties(patentEntity,patentVo);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            return patentEntity;
+        }).collect(Collectors.toList());
+        log.info("索引patent_zhen:{}",patentEntities.size());
+        patentService.saveAllPatent(patentEntities);
+        return CommonResult.success("");
+    }
 //
 //    @RequestMapping("delAllIndex")
 //    public String delAllIndex(){
@@ -65,6 +82,7 @@ public class IndexController {
         String prePno = "";
         PatentEntity patentEntity = null;
         List<PatentZhEnIndex> list = new ArrayList<>();
+        List<IndexDto> notExistsFileNos = Lists.newArrayList();
         int i = 0;
         for (IndexDto indexDto : indexDtos){
             String pno = indexDto.getPno();
@@ -73,6 +91,7 @@ public class IndexController {
                 prePno = pno;
             }
             if(patentEntity==null){
+                notExistsFileNos.add(indexDto);
                 i++;
                 continue;
             }
@@ -100,7 +119,7 @@ public class IndexController {
         if(list.size()>0){
             patentService.saveAllPatentZhEn(list);
         }
-        return CommonResult.success(null,"索引创建成功");
+        return CommonResult.success(notExistsFileNos,"索引创建成功");
     }
 
     @RequestMapping("temporaryCreate")
