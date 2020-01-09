@@ -128,7 +128,7 @@ public class PatentServiceImpl implements PatentService {
     public PatentEntity findOnePatentByNo(String patentNo) {
         Pageable pageable = PageRequest.of(0, 1);
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(QueryBuilders.matchPhraseQuery("applicationNumber", patentNo))
+                .withQuery(QueryBuilders.matchPhraseQuery("fileNo", patentNo))
                 .withPageable(pageable)
                 .build();
         Page<PatentEntity> patentEntityPage = patentRepository.search(searchQuery);

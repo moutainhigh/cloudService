@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.cold</groupId>
     <artifactId>searchservice</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>searchservice</name>
     <description>Demo project for Spring Boot</description>
 

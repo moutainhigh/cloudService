@@ -12,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -82,8 +79,20 @@ public class ServiceApiController {
         return CommonResult.success(sortedMap);
     }
 
+    @PostMapping("searchPatentInfo")
+    public CommonResult searchPatentInfo(@RequestParam(value = "fileNo") String fileNo){
+        log.info("查询专利信息:{}",fileNo);
+        return searchService.searchPatentInfo(fileNo);
+    }
     @RequestMapping(value="/createIndex")
     public CommonResult createIndex(@RequestBody List<IndexDto> indexDtos){
+        log.info("创建索引:{}",indexDtos.size());
         return searchService.createIndex(indexDtos);
+    }
+
+    @RequestMapping(value="/exportSql2Index")
+    public CommonResult exportSql2Index(@RequestBody List<PatentVo> patentVos){
+        log.info("数据库数据导出,创建索引:{}",patentVos.size());
+        return searchService.exportSql2Index(patentVos);
     }
 }

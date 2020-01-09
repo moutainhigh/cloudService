@@ -6,10 +6,7 @@ import com.cold.pojo.SearchRequest;
 import com.cold.response.CommonResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,7 +43,15 @@ public interface SearchService {
         List<String> getSearchTerms(@RequestParam String searchContent);
 
         @ResponseBody
-        @RequestMapping(value="/index/createIndex")
+        @PostMapping(value="/api/searchPatentInfo")
+        CommonResult searchPatentInfo(@RequestParam(value = "fileNo") String fileNo);
+
+        @ResponseBody
+        @PostMapping(value="/index/createIndex")
         CommonResult createIndex(@RequestBody List<IndexDto> indexDtos);
+
+        @ResponseBody
+        @PostMapping(value="/index/exportSql2Index")
+        CommonResult exportSql2Index(@RequestBody List<PatentVo> patentVos);
 
 }

@@ -2,6 +2,8 @@ package com.cold.searchservice.controller;
 
 import com.cold.pojo.PatentVo;
 import com.cold.pojo.SearchRequest;
+import com.cold.response.CommonResult;
+import com.cold.searchservice.entity.PatentEntity;
 import com.cold.searchservice.entity.PatentZhEnIndex;
 import com.cold.searchservice.service.PatentService;
 import com.cold.utils.StringUtil;
@@ -13,10 +15,7 @@ import org.elasticsearch.action.admin.indices.analyze.AnalyzeResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.naming.directory.SearchResult;
 import javax.validation.Valid;
@@ -40,7 +39,7 @@ public class SearchController {
     private ElasticsearchTemplate elasticsearchTemplate;
     @Autowired
     private PatentService patentService;
-    @RequestMapping("basicSearch")
+    @PostMapping("basicSearch")
     public List<PatentVo> basicSearch(String kw,Integer searchType,@RequestParam(defaultValue = "100") Integer count){
         Map<String,String> map = new HashMap<>();
         switch (searchType){
@@ -75,7 +74,7 @@ public class SearchController {
         return patentVos;
     }
 
-    @RequestMapping("search")
+    @PostMapping("search")
     public List<PatentVo> search(@Valid @RequestBody SearchRequest searchRequest){
         Map<String,String> map = new HashMap<>();
         switch (searchRequest.getSrcLan()){
@@ -90,7 +89,7 @@ public class SearchController {
             map.put("mainClassification",searchRequest.getCatalog());
         }
         if(StringUtils.isNotBlank(searchRequest.getApplicants())){
-            map.put("applicants",searchRequest.getCatalog());
+            map.put("applicants",searchRequest.getApplicants());
         }
         int count = searchRequest.getCount();
         if(count>500)count = 500;
@@ -133,5 +132,17 @@ public class SearchController {
             searchTermList.add(ikToken.getTerm());
         });
         return searchTermList;
+    }
+
+    @PostMapping("searchPatentInfo")
+    public CommonResult searchPatentInfo(@RequestParam(value = "fileNo") String fileNo){
+        PatentEntity patentEntity = patentService.findOnePatentByNo(fileNo);
+        if(patentEntity!=null){
+            PatentVo patentVo = new PatentVo();
+            BeanUtils.copyProperties(patentEntity,patentVo);
+            return CommonResult.success(patentVo);
+        }else{
+            return CommonResult.success(null);
+        }
     }
 }
