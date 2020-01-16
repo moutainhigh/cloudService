@@ -31,7 +31,9 @@ public class SearchResultServiceImpl implements SearchResultService {
             for (String segTrans : transList){
                 if(resMap.containsKey(segTrans)){
                     List<PatentVo> list = resMap.get(segTrans);
-                    list.add(patentVo);
+                    if(!list.contains(patentVo)){
+                        list.add(patentVo);
+                    }
                 }else {
                     List<PatentVo> list = Lists.newArrayList();
                     list.add(patentVo);

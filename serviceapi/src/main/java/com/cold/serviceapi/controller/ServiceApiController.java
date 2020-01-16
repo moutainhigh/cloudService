@@ -49,23 +49,31 @@ public class ServiceApiController {
 
     @RequestMapping(value="/search")
     public CommonResult search(@Valid @RequestBody SearchRequest searchRequest){
+        long start = System.currentTimeMillis();
         String kw = searchRequest.getKw();
         String terms = kw;
         boolean removeTransBlank = false;
         if(searchRequest.getSrcLan().equalsIgnoreCase("zh")){//中到英,原文分词后匹配
+            long l1 = System.currentTimeMillis();
             List<String> segList = searchService.getSearchTerms(kw);
             terms = StringUtils.join(segList," ");
+            long l2 = System.currentTimeMillis();
+            log.info("中文分词用时:{}s",(l2-l1)/1000f);
         }else{
             removeTransBlank = true;
         }
         log.info("检索词:{},检索类型:{},分类:{},结果数:{}",terms,searchRequest.getSrcLan()+"/"+searchRequest.getTgtLan(),searchRequest.getCatalog(),searchRequest.getCount());
         List<PatentVo> patentVos = searchService.search(searchRequest);
+        long end = System.currentTimeMillis();
+        log.info("检索用时:{}s",(end-start)/1000f);
         Map<String,List<PatentVo>> resMap = searchResultService.getTermTransResult(terms,patentVos,removeTransBlank);
         Comparator<Map.Entry<String, List<PatentVo>>> comp = (o1, o2) -> o2.getValue().size() - o1.getValue().size();
         Map<String,List<PatentVo>> sortedMap = Maps.newLinkedHashMap();
         resMap.entrySet().stream().sorted(comp).forEachOrdered(entry -> {
             sortedMap.put(entry.getKey(), entry.getValue());
         });
+        long searchTermMillis = System.currentTimeMillis();
+        log.info("查找术语用时:{}s",(searchTermMillis-end)/1000f);
 //                .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
 //        List<Map.Entry<String,List<PatentVo>>> list = Lists.newArrayList(resMap.entrySet());
 //        list.stream()

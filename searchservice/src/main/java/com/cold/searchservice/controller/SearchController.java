@@ -92,7 +92,8 @@ public class SearchController {
             map.put("applicants",searchRequest.getApplicants());
         }
         int count = searchRequest.getCount();
-        if(count>500)count = 500;
+        if(count>200)count = 200;
+        log.info("检索词:{},检索类型:{},分类:{},结果数:{}",searchRequest.getKw(),searchRequest.getSrcLan()+"/"+searchRequest.getTgtLan(),searchRequest.getCatalog(),searchRequest.getCount());
         List<PatentZhEnIndex> list = patentService.pageQueryZhen(0,count,map);
         List<PatentVo> patentVos = list.stream().map(patentZhEnIndex -> {
             PatentVo patentVo = new PatentVo();
